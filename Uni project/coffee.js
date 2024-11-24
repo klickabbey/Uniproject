@@ -5,6 +5,7 @@ const swiper = new Swiper(".swiper", {
   },
   effect: "fade",
   loop: true,
+  
   pagination: {
     el: ".swiper-pagination",
     clickable: true,
@@ -30,11 +31,16 @@ window.addEventListener("scroll", () => {
 });
 
 const startCount = (el) => {
-  let max = el.dataset.val;
-  let count = setInterval(() => {
-    el.textContent++;
-    if (el.textContent === max) {
-      clearInterval(count);
+  let max = parseInt(el.dataset.val, 10); // Ensure max is an integer
+  let count = 0; // Initialize count
+  let increment = Math.ceil(max / 200); // Calculate increment based on duration
+
+  let interval = setInterval(() => {
+    count += increment; // Increment count
+    if (count >= max) {
+      count = max; // Ensure count does not exceed max
+      clearInterval(interval);
     }
-  }, 2000 / nums);
+    el.textContent = count; // Update the text content
+  }, 10); // Update every 10 milliseconds
 };
